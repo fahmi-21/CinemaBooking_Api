@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Domain.Entities
 {
-    internal class Section
+    public class Section
     {
         public int Id { get; set; }
 

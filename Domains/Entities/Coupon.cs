@@ -15,7 +15,6 @@ public class Coupon : BaseEntity
     public bool IsActive { get; set; }
     public Guid? ApplicableMovieId { get; set; }
     public Guid? ApplicableBranchId { get; set; }
-
     public Movie? ApplicableMovie { get; set; }
     public Branch? ApplicableBranch { get; set; }
     public ICollection<CouponRedemption> CouponRedemptions { get; set; } = [];

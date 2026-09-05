@@ -6,7 +6,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace Domain.Entities
 {
-    internal class Hall
+    public class Hall
     {
         public int Id { get; set; }
 
