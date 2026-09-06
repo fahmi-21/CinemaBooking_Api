@@ -9,11 +9,11 @@ public class Movie : BaseEntity
     public string? Description { get; set; }
     public int DurationMinutes { get; set; }
     public DateTime? ReleaseDate { get; set; }
-    public string? PosterUrl { get; set; }
-    public string? TrailerUrl { get; set; }
-    public string? Language { get; set; }
-    public string? Country { get; set; }
-    public string? Director { get; set; }
+    public string PosterUrl { get; set; } = string.Empty;
+    public string TrailerUrl { get; set; } = string.Empty;
+    public string Language { get; set; } = string.Empty;
+    public string Country { get; set; } = string.Empty;
+    public string Director { get; set; } = string.Empty;
     public AgeRating AgeRating { get; set; }
     public decimal AverageRating { get; set; }
     public MovieStatus Status { get; set; }

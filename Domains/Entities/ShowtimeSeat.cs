@@ -5,8 +5,8 @@ namespace Domain.Entities;
 
 public class ShowtimeSeat : BaseEntity
 {
-    public Guid ShowtimeId { get; set; }
-    public Guid SeatId { get; set; }
+    public int ShowtimeId { get; set; }
+    public int SeatId { get; set; }
     public ShowtimeSeatStatus Status { get; set; }
     public Guid? LockedByUserId { get; set; }
     public DateTime? LockExpiresAt { get; set; }

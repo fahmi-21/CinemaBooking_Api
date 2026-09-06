@@ -3,13 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using static System.Collections.Specialized.BitVector32;
+using Domain.Entities.Common;
 
 namespace Domain.Entities
 {
-    public class Hall
+    public class Hall : BaseEntity
     {
-        public int Id { get; set; }
-
         public int BranchId { get; set; }
 
         public string Name { get; set; } = null!;

@@ -2,8 +2,8 @@ namespace Domain.Entities;
 
 public class MovieActor
 {
-    public Guid MovieId { get; set; }
-    public Guid ActorId { get; set; }
+    public int MovieId { get; set; }
+    public int ActorId { get; set; }
     public string? RoleName { get; set; }
 
     public Movie Movie { get; set; } = null!;

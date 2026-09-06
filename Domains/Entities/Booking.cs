@@ -4,10 +4,11 @@ using Domain.Enums;
 
 namespace Domain.Entities;
 
-public class Booking : BaseEntity
+public class Booking
 {
+    public int Id { get; set; }
     public Guid UserId { get; set; }
-    public Guid ShowtimeId { get; set; }
+    public int ShowtimeId { get; set; }
     public BookingStatus Status { get; set; }
     public decimal TotalAmount { get; set; }
     public DateTime? ExpiresAt { get; set; }

@@ -7,10 +7,7 @@ namespace Domain.Entities
     public class Section
     {
         public int Id { get; set; }
-
-
         public string Name { get; set; } = null!;
-
         public int DisplayOrder { get; set; }
         public int HallId { get; set; }
 

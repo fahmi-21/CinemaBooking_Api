@@ -5,7 +5,7 @@ namespace Domain.Entities;
 
 public class Seat : BaseEntity
 {
-    public Guid SectionId { get; set; }
+    public int SectionId { get; set; }
     public string RowLabel { get; set; } = string.Empty;
     public int SeatNumber { get; set; }
     public SeatType SeatType { get; set; }

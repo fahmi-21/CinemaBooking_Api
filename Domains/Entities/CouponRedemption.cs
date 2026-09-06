@@ -4,10 +4,10 @@ namespace Domain.Entities;
 
 public class CouponRedemption
 {
-    public Guid Id { get; set; }
-    public Guid CouponId { get; set; }
+    public int Id { get; set; }
+    public int CouponId { get; set; }
     public Guid UserId { get; set; }
-    public Guid BookingId { get; set; }
+    public int BookingId { get; set; }
     public DateTime RedeemedAt { get; set; }
 
     public Coupon Coupon { get; set; } = null!;
