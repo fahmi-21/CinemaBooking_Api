@@ -7,9 +7,8 @@ using Domain.Entities.Identity;
 
 namespace Application.Abstractions.Persistence
 {
-    internal interface IApplicationDbContext
+    public interface IAppDbContext
     {
-        DbSet<ApplicationUser> Users { get; }
         DbSet<Actor> Actors { get; }
         DbSet<Booking> Bookings { get; }
         DbSet<BookingSeat> BookingSeats { get; }
@@ -31,6 +30,6 @@ namespace Application.Abstractions.Persistence
         DbSet<Payment> Payments { get; }
         DbSet<Ticket> Tickets { get; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

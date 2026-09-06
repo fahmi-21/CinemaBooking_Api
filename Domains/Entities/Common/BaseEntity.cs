@@ -13,4 +13,4 @@ namespace Domain.Entities.Common
         public DateTime? UpdatedAt { get; set; }
     }
 }
-}
+
