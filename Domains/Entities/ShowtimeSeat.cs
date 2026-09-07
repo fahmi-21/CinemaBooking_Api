@@ -8,7 +8,7 @@ public class ShowtimeSeat : BaseEntity
     public int ShowtimeId { get; set; }
     public int SeatId { get; set; }
     public ShowtimeSeatStatus Status { get; set; }
-    public Guid? LockedByUserId { get; set; }
+    public int? LockedByUserId { get; set; }
     public DateTime? LockExpiresAt { get; set; }
     public decimal Price { get; set; }
     public byte[] RowVersion { get; set; } = [];

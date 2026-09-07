@@ -7,7 +7,7 @@ namespace Domain.Entities;
 public class Booking
 {
     public int Id { get; set; }
-    public Guid UserId { get; set; }
+    public int UserId { get; set; }
     public int ShowtimeId { get; set; }
     public BookingStatus Status { get; set; }
     public decimal TotalAmount { get; set; }

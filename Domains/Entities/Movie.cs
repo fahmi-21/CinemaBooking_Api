@@ -15,7 +15,7 @@ public class Movie : BaseEntity
     public string Country { get; set; } = string.Empty;
     public string Director { get; set; } = string.Empty;
     public AgeRating AgeRating { get; set; }
-    public decimal AverageRating { get; set; }
+    public decimal? AverageRating { get; set; }
     public MovieStatus Status { get; set; }
     public ICollection<MovieActor> MovieActors { get; set; } = [];
     public ICollection<MovieGenre> MovieGenres { get; set; } = [];

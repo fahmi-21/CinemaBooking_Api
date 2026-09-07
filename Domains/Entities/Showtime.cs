@@ -15,4 +15,5 @@ public class Showtime : BaseEntity
     public Movie Movie { get; set; } = null!;
     public Hall Hall { get; set; } = null!;
     public ICollection<ShowtimeSeat> ShowtimeSeats { get; set; } = [];
+    public ICollection<Booking> Bookings { get; set; } = [];
 }
