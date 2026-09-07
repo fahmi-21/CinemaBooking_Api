@@ -1,9 +1,5 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static System.Collections.Specialized.BitVector32;
 using Domain.Entities.Common;
+using Domain.Enums;
 
 namespace Domain.Entities
 {

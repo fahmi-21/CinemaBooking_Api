@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Entities.Identity;
 
-public class ApplicationUser : IdentityUser
+public class ApplicationUser : IdentityUser<int>
 {
     public string FtName { get; set; } = string.Empty;
     public string LName { get; set; } = string.Empty;

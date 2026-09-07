@@ -1,7 +1,9 @@
 using Scalar.AspNetCore;
 using Application;
+using Infrastructure;
+using Application.Abstractions.Persistence;
 
-class program
+class Program
 {
     static void Main(string[] args)
     {
@@ -13,6 +15,9 @@ class program
         builder.Services.AddApplication();
 
         builder.Services.AddControllers();
+
+        builder.Services.AddInfrastructure(builder.Configuration);
+
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 

@@ -10,7 +10,7 @@ public class Ticket : BaseEntity
     public TicketStatus Status { get; set; }
     public DateTime IssuedAt { get; set; }
     public DateTime? UsedAt { get; set; }
-    public Guid BookingId { get; set; }
+    public int BookingId { get; set; }
 
     public Booking Booking { get; set; } = null!;
 }

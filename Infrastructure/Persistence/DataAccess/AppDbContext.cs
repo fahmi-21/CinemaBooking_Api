@@ -1,5 +1,6 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,7 +12,7 @@ using Application.Abstractions.Persistence;
 
 namespace Infrastructure.Persistence.DataAccess
 {
-    internal class AppDbContext : IdentityDbContext<ApplicationUser> , IAppDbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>, IAppDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -37,5 +38,12 @@ namespace Infrastructure.Persistence.DataAccess
         public DbSet<ShowtimeSeat> ShowtimeSeats => Set<ShowtimeSeat>();
         public DbSet<Payment> Payments => Set<Payment>();
         public DbSet<Ticket> Tickets => Set<Ticket>();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        }
     }
 }
