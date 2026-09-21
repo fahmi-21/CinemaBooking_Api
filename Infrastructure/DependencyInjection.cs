@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure
 {
@@ -14,6 +16,16 @@ namespace Infrastructure
         {
             services.AddDbContext<AppDbContext>(options =>options
                 .UseSqlServer( configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddHttpContextAccessor();
+
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication();
+
+            services.AddAuthorization();
 
             return services;
         }

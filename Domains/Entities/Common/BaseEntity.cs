@@ -8,9 +8,19 @@ namespace Domain.Entities.Common
     {
         public int Id { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; protected set; }
 
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; protected set; }
+
+        public void SetCreatedAt()
+        {
+            CreatedAt = DateTime.UtcNow;
+        }
+
+        public void SetUpdatedAt()
+        {
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }
 

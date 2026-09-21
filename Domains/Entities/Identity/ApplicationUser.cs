@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Entities.Identity;
 
-public class ApplicationUser : IdentityUser<int>
+public class ApplicationUser : IdentityUser<Guid>
 {
-    public string FtName { get; set; } = string.Empty;
+    public string FName { get; set; } = string.Empty;
     public string LName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public bool IsActive { get; set; }

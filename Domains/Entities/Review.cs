@@ -5,7 +5,7 @@ namespace Domain.Entities;
 
 public class Review : BaseEntity
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
     public int MovieId { get; set; }
     public byte Rating { get; set; }
     public string? Comment { get; set; }

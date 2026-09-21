@@ -12,7 +12,7 @@ using Application.Abstractions.Persistence;
 
 namespace Infrastructure.Persistence.DataAccess
 {
-    public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>, IAppDbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>, IAppDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
