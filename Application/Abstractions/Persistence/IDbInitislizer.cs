@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Application.Abstractions.Persistence
 {
-    internal interface IDbInitislizer
+    public interface IDbInitislizer
     {
+        Task InitializeAsync();
     }
 }

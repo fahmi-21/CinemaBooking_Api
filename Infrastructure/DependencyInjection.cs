@@ -1,12 +1,14 @@
-﻿using Infrastructure.Persistence.DataAccess;
+﻿using Domain.Entities.Identity;
+using Infrastructure.Persistence.DataAccess;
+using Infrastructure.Persistence.Initialization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Application.Abstractions.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using Domain.Entities.Identity;
-using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure
 {
@@ -22,6 +24,9 @@ namespace Infrastructure
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<IDbInitislizer, DbInitializer>();
+
 
             services.AddAuthentication();
 

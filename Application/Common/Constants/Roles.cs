@@ -4,7 +4,12 @@ using System.Text;
 
 namespace Application.Common.Constants
 {
-    internal class Roles
+    public class Roles
     {
+        public const string SUPER_ADMIN_ROLE = "SuperAdmin";
+        public const string ADMIN_ROLE = "Admin";
+        public const string BRANCH_MANAGER_ROLE = "BranchManager";
+        public const string EMPLOYEE_ROLE = "Employee";
+        public const string CUSTOMER_ROLE = "Customer";   
     }
 }

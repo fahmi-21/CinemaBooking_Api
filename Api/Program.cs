@@ -1,30 +1,34 @@
-using Scalar.AspNetCore;
 using Application;
-using Infrastructure;
 using Application.Abstractions.Persistence;
+using Infrastructure;
+using Infrastructure.Persistence.Initialization;
+using Scalar.AspNetCore;
 
-class Program
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddApplication();
+
+builder.Services.AddControllers();
+
+builder.Services.AddInfrastructure(builder.Configuration);
+
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+
+var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
 {
-    static void Main(string[] args)
-    {
-       
+    var initializer = scope.ServiceProvider
+        .GetRequiredService<IDbInitislizer>();
 
-        var builder = WebApplication.CreateBuilder(args);
+    await initializer.InitializeAsync();
+}
 
-        // Add services to the container.
-        builder.Services.AddApplication();
-
-        builder.Services.AddControllers();
-
-        builder.Services.AddInfrastructure(builder.Configuration);
-
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
             app.MapScalarApiReference();
@@ -37,5 +41,4 @@ class Program
         app.MapControllers();
 
         app.Run();
-    }
-}
+    
