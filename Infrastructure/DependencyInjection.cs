@@ -1,6 +1,7 @@
 ﻿using Domain.Entities.Identity;
 using Infrastructure.Persistence.DataAccess;
 using Infrastructure.Persistence.Initialization;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,8 @@ namespace Infrastructure
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IDbInitislizer, DbInitializer>();
+
+            services.AddScoped<IEmailService, EmailService>();
 
 
             services.AddAuthentication();

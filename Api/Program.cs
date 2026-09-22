@@ -1,8 +1,10 @@
 using Application;
 using Application.Abstractions.Persistence;
+using Api.MiddleWare;
 using Infrastructure;
 using Infrastructure.Persistence.Initialization;
 using Scalar.AspNetCore;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -28,11 +32,15 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
-        {
+{
             app.MapOpenApi();
             app.MapScalarApiReference();
-        }
+            app.UseSwagger();
+            app.UseSwaggerUI();
+}
 
         app.UseHttpsRedirection();
 

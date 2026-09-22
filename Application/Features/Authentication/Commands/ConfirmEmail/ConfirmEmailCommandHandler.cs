@@ -27,20 +27,7 @@ namespace Application.Features.Authentication.Commands.ConfirmEmail
             if (user.EmailConfirmed)
                 return new ConfirmEmailResponse(false, "Email is already confirmed.");
 
-            string decodedToken;
-
-            try
-            {
-                var tokenBytes = Convert.FromBase64String(request.Token);
-                decodedToken = Encoding.UTF8.GetString(tokenBytes);
-
-            }
-            catch 
-            {
-                return new ConfirmEmailResponse( false, "Invalid confirmation token.");
-            }
-
-            var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+            var result = await _userManager.ConfirmEmailAsync(user, request.Token);
 
             if (!result.Succeeded)
             {
