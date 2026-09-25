@@ -9,7 +9,7 @@ using Domain.Entities.Identity;
 
 namespace Application.Features.Authentication.Commands.ConfirmEmail
 {
-    public class ConfirmEmailCommandHandler :IRequestHandler<ConfirmEmailCommand, ConfirmEmailResponse>
+    public  sealed class ConfirmEmailCommandHandler :IRequestHandler<ConfirmEmailCommand, ConfirmEmailResponse>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         public ConfirmEmailCommandHandler(

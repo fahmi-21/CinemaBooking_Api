@@ -38,6 +38,7 @@ namespace Infrastructure.Persistence.DataAccess
         public DbSet<ShowtimeSeat> ShowtimeSeats => Set<ShowtimeSeat>();
         public DbSet<Payment> Payments => Set<Payment>();
         public DbSet<Ticket> Tickets => Set<Ticket>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

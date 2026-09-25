@@ -9,6 +9,7 @@ namespace Application.Abstractions.Persistence
 {
     public interface IAppDbContext
     {
+        DbSet<RefreshToken> RefreshTokens { get; }
         DbSet<Actor> Actors { get; }
         DbSet<Booking> Bookings { get; }
         DbSet<BookingSeat> BookingSeats { get; }

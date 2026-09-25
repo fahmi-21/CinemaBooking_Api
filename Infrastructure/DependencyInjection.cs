@@ -27,8 +27,8 @@ namespace Infrastructure
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IDbInitislizer, DbInitializer>();
-
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ITokenService, TokenService>();
 
 
             services.AddAuthentication();
