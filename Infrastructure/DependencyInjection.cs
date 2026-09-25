@@ -25,7 +25,7 @@ namespace Infrastructure
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddScoped<IAppDbContext, AppDbContext>();
             services.AddScoped<IDbInitislizer, DbInitializer>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITokenService, TokenService>();
