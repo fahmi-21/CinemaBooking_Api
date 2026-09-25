@@ -39,7 +39,7 @@ namespace Application.Features.Authentication.Commands.ForgotPassword
                 );
             }
 
-            var token = await _userManager.GenerateChangeEmailTokenAsync(user);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var encodedtoken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
             var appUrl = _configuration["AppUrl"] ?? "https://localhost:53231";
@@ -52,7 +52,7 @@ namespace Application.Features.Authentication.Commands.ForgotPassword
                 $"<p>\r\n   <a href=\"{resetLink}\">\r\n Reset my password\r\n   </a>\r\n </p>\r\n\r\n" +
                 $"<p>\r\n   If you did not request this, you can ignore this email.\r\n</p>";
 
-            await _emailService.SendEmailAsync( user.Email , "Reset your password", body , cancellationToken);
+            await _emailService.SendEmailAsync( user.Email! , "Reset your password", body , cancellationToken);
 
             return new ForgotPasswordResponse(
             true,

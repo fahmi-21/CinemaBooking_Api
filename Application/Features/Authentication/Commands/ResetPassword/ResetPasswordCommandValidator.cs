@@ -6,7 +6,7 @@ namespace Application.Features.Authentication.Commands.ResetPassword
 {
     public class ResetPasswordCommandValidator : AbstractValidator<ResetPasswordCommand>
     {
-        public ResetPasswordCommand ()
+        public ResetPasswordCommandValidator ()
         {
             RuleFor( e => e.UserId)
                 .NotEmpty()
