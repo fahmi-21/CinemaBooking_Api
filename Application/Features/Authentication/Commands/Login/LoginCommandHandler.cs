@@ -36,7 +36,7 @@ namespace Application.Features.Authentication.Commands.Login
             var refreshToken = _tokenService.GenerateRefreshToken();
             return new LoginResponse(
                 user.Id,
-                user.Email,
+                user.Email!,
                 accessToken,
                 refreshToken
             );

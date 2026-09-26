@@ -22,6 +22,7 @@ namespace Infrastructure
 
             services.AddHttpContextAccessor();
 
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();

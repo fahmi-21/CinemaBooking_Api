@@ -1,4 +1,5 @@
-﻿using Application.Features.Authentication.Commands.ConfirmEmail;
+﻿using Application.Features.Authentication.Commands.ChangePassword;
+using Application.Features.Authentication.Commands.ConfirmEmail;
 using Application.Features.Authentication.Commands.ForgotPassword;
 using Application.Features.Authentication.Commands.Login;
 using Application.Features.Authentication.Commands.Logout;
@@ -69,6 +70,13 @@ namespace Api.Controllers
         public async Task<IActionResult>ResetPassword ( ResetPasswordCommand command)
         {
             var result = await _sender.Send(command);
+
+            return Ok(result);
+        }
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult>ChangePassword (ChangePasswordCommand command)
+        {
+            var result = _sender.Send(command);
 
             return Ok(result);
         }
