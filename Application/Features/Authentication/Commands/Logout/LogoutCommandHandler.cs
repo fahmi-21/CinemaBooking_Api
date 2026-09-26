@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Authentication.Commands.Logout
 {
-    public sealed class LogoutCommandHandler
+    public sealed class LogoutCommandHandler : IRequestHandler<LogoutCommand>
     {
         private readonly ITokenService _tokenService;
         private readonly IAppDbContext _context;

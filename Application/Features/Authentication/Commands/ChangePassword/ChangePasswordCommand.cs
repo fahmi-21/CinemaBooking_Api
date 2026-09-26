@@ -6,6 +6,7 @@ namespace Application.Features.Authentication.Commands.ChangePassword
 {
     public sealed record ChangePasswordCommand(
         string CurrentPassword,
-        string NewPassword
+        string NewPassword,
+        string ConfirmNewPassword
         ) : IRequest<ChangePasswordResponse>;
 }

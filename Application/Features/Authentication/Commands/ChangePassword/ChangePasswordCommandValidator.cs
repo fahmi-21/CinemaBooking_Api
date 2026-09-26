@@ -10,11 +10,11 @@ namespace Application.Features.Authentication.Commands.ChangePassword
         {
             RuleFor(e => e.CurrentPassword)
                 .NotEmpty()
-                .MinimumLength(6);
+                .WithMessage("Old password is required.");
 
             RuleFor(e => e.NewPassword)
                 .NotEmpty()
-                .MinimumLength(6);
+                .WithMessage("New password is required.");
 
             RuleFor(x => x.NewPassword)
             .NotEqual(x => x.CurrentPassword)

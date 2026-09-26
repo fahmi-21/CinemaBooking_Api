@@ -1,9 +1,12 @@
-using Application;
 using Api.MiddleWare;
+using Application;
+using Application.Abstractions;
 using Infrastructure;
 using Infrastructure.Persistence.Initialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
-using Application.Abstractions;
+using System.Text;
 
 
 
@@ -21,6 +24,48 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+// JWT Authentication Configuration =====================================================
+var jwtKey = builder.Configuration["JWT:Key"]
+    ?? throw new InvalidOperationException("JWT:Key is not configured.");
+
+var jwtIssuer = builder.Configuration["JWT:Issuer"]
+    ?? throw new InvalidOperationException("JWT:Issuer is missing.");
+
+var jwtAudience = builder.Configuration["JWT:Audience"]
+    ?? throw new InvalidOperationException("JWT:Audience is missing.");
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+ .AddJwtBearer(options =>
+ {
+     options.SaveToken = true;
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+
+
+         ValidateIssuer = true,
+         ValidIssuer = jwtIssuer,
+
+         ValidateAudience = true,
+         ValidAudience = jwtAudience,
+
+         ValidateLifetime = true,
+         ClockSkew = TimeSpan.Zero,
+
+         ValidateIssuerSigningKey = true,
+         IssuerSigningKey = new SymmetricSecurityKey(
+             Encoding.UTF8.GetBytes(jwtKey)
+         )
+
+
+     };
+ });
+
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -36,17 +81,16 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
-            app.MapOpenApi();
-            app.MapScalarApiReference();
-            app.UseSwagger();
-            app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+//app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 
-        app.UseHttpsRedirection();
+app.MapControllers();
 
-        app.UseAuthorization();
-
-        app.MapControllers();
-
-        app.Run();
-    
+app.Run();
