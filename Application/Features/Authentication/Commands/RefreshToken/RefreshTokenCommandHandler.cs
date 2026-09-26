@@ -1,4 +1,4 @@
-﻿using Application.Abstractions.Persistence;
+﻿using Application.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

@@ -1,9 +1,9 @@
 using Application;
-using Application.Abstractions.Persistence;
 using Api.MiddleWare;
 using Infrastructure;
 using Infrastructure.Persistence.Initialization;
 using Scalar.AspNetCore;
+using Application.Abstractions;
 
 
 

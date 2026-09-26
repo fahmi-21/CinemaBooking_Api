@@ -1,4 +1,4 @@
-﻿using Application.Abstractions.Persistence;
+﻿using Application.Abstractions;
 using Application.Features.Authentication.Commands.Logout;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

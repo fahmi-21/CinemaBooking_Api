@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Application.Abstractions.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Application.Abstractions;
 
 namespace Infrastructure
 {

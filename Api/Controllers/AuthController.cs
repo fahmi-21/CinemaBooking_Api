@@ -7,6 +7,7 @@ using Application.Features.Authentication.Commands.Register;
 using Application.Features.Authentication.Commands.ResetPassword;
 using Infrastructure.Services;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -73,6 +74,7 @@ namespace Api.Controllers
 
             return Ok(result);
         }
+        [Authorize]
         [HttpPost("ChangePassword")]
         public async Task<IActionResult>ChangePassword (ChangePasswordCommand command)
         {

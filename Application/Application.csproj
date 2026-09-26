@@ -19,8 +19,10 @@
 
   <ItemGroup>
     <Folder Include="DTOs\" />
-    <Folder Include="Features\Authentication\RefreshToken\" />
-    <Folder Include="Features\Authentication\Queries\" />
+    <Folder Include="Features\Branches\Commands\Delete\" />
+    <Folder Include="Features\Branches\Commands\Update\" />
+    <Folder Include="Features\Branches\Queries\GetBranshById\" />
+    <Folder Include="Features\Branches\Queries\GetBranches\" />
   </ItemGroup>
 
 </Project>

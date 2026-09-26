@@ -1,7 +1,7 @@
-﻿using Application.Abstractions.Persistence;
-using MimeKit;
+﻿using MimeKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using Application.Abstractions;
 
 namespace Infrastructure.Services;
 

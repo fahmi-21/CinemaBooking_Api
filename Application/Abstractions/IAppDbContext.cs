@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities.Identity;
 
-namespace Application.Abstractions.Persistence
+namespace Application.Abstractions
 {
     public interface IAppDbContext
     {

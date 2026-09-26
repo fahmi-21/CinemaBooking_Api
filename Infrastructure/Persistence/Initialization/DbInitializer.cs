@@ -1,4 +1,4 @@
-﻿using Application.Abstractions.Persistence;
+﻿using Application.Abstractions;
 using Domain.Entities.Identity;
 using Infrastructure.Persistence.DataAccess;
 using Microsoft.AspNetCore.Identity;

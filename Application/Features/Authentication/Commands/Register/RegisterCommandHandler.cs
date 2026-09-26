@@ -1,10 +1,10 @@
 ﻿using Domain.Entities.Identity;
-using Application.Abstractions.Persistence;
 using Application.Common.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Application.Abstractions;
 
 namespace Application.Features.Authentication.Commands.Register;
 

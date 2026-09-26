@@ -1,5 +1,4 @@
-﻿using Application.Abstractions.Persistence;
-using Domain.Entities.Identity;
+﻿using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Security.Cryptography;
+using Application.Abstractions;
 
 namespace Infrastructure.Services
 {

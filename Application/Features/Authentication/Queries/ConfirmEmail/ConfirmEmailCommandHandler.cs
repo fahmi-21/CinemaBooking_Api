@@ -7,7 +7,7 @@ using System.Text;
 using Application.Common.Constants;
 using Domain.Entities.Identity;
 
-namespace Application.Features.Authentication.Commands.ConfirmEmail
+namespace Application.Features.Authentication.Queries.ConfirmEmail
 {
     public  sealed class ConfirmEmailCommandHandler :IRequestHandler<ConfirmEmailCommand, ConfirmEmailResponse>
     {
