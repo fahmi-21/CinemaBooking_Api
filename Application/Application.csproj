@@ -19,8 +19,6 @@
 
   <ItemGroup>
     <Folder Include="DTOs\" />
-    <Folder Include="Features\Branches\Queries\GetBranshById\" />
-    <Folder Include="Features\Branches\Queries\GetBranches\" />
   </ItemGroup>
 
 </Project>

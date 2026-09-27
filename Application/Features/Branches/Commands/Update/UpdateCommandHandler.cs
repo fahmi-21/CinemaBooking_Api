@@ -19,7 +19,7 @@ namespace Application.Features.Branches.Commands.Update
             var branch = await _context.Branches.FirstOrDefaultAsync(e => e.Id == request.Id, cancellationToken);
 
             if (branch is null)
-                return false
+                return false;
 
             branch.Name = request.Name;
             branch.Address = request.Address;
