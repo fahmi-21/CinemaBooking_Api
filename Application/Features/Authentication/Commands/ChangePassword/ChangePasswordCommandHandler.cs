@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions;
+using Application.Common.Models;
 using Domain.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 namespace Application.Features.Authentication.Commands.ChangePassword
 {
-    public sealed class ChangePasswordCommandHandler : IRequestHandler< ChangePasswordCommand , ChangePasswordResponse>
+    public sealed class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, ApiResponse<EmptyResponse>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICurrentUserService _currentUserService;
@@ -19,14 +20,14 @@ namespace Application.Features.Authentication.Commands.ChangePassword
             _currentUserService = currentUserService;
         }
 
-        public async Task<ChangePasswordResponse> Handle ( ChangePasswordCommand request , CancellationToken cancellationToken)
+        public async Task<ApiResponse<EmptyResponse>> Handle ( ChangePasswordCommand request , CancellationToken cancellationToken)
         {
             var userId =  _currentUserService.UserId;
             var user = await _userManager.FindByIdAsync(userId.ToString());
 
             if (user is null)
             {
-                return new ChangePasswordResponse(  false, "User not found.");
+                return new ApiResponse<EmptyResponse>(false, "User not found.", null);
             }
 
             var result = await _userManager.ChangePasswordAsync(
@@ -38,10 +39,10 @@ namespace Application.Features.Authentication.Commands.ChangePassword
         {
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));
 
-                return new ChangePasswordResponse(   false, $"Password change failed: {errors}");
+                return new ApiResponse<EmptyResponse>(false, $"Password change failed: {errors}", null);
             }
 
-            return new ChangePasswordResponse( true, "Password changed successfully.");
+            return new ApiResponse<EmptyResponse>(true, "Password changed successfully.", new EmptyResponse());
         }
     }
 }

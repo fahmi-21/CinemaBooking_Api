@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions;
+using Application.Common.Models;
 using Domain.Entities;
 using Domain.Entities.Identity;
 using MediatR;
@@ -11,7 +12,7 @@ using System.Text;
 
 namespace Application.Features.Authentication.Commands.ForgotPassword
 {
-    public sealed class ForgotPasswordCommandHandler: IRequestHandler<ForgorPasswordCommand, ForgotPasswordResponse>
+    public sealed class ForgotPasswordCommandHandler: IRequestHandler<ForgorPasswordCommand, ApiResponse<EmptyResponse>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
@@ -27,15 +28,16 @@ namespace Application.Features.Authentication.Commands.ForgotPassword
             _emailService = emailService;
         }
 
-        public async Task<ForgotPasswordResponse> Handle ( ForgorPasswordCommand request , CancellationToken cancellationToken)
+        public async Task<ApiResponse<EmptyResponse>> Handle ( ForgorPasswordCommand request , CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             if (user is null)
             {
-                return new ForgotPasswordResponse(
+                return new ApiResponse<EmptyResponse>(
                     true,
-                    "If the email exists, a password reset link has been sent."
+                    "If the email exists, a password reset link has been sent.",
+                    new EmptyResponse()
                 );
             }
 
@@ -54,9 +56,10 @@ namespace Application.Features.Authentication.Commands.ForgotPassword
 
             await _emailService.SendEmailAsync( user.Email! , "Reset your password", body , cancellationToken);
 
-            return new ForgotPasswordResponse(
+            return new ApiResponse<EmptyResponse>(
             true,
-            "If the email exists, a password reset link has been sent."
+            "If the email exists, a password reset link has been sent.",
+            new EmptyResponse()
             );
         }
     }

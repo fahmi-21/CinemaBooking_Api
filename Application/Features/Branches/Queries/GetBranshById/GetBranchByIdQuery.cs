@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Application.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Application.Features.Branches.Queries.GetBranshById
 {
     public sealed record GetBranchByIdQuery(
-        int Id) : IRequest<GetBranchByIdResponse?>;
+        int Id) : IRequest<ApiResponse<GetBranchByIdResponse>>;
 }

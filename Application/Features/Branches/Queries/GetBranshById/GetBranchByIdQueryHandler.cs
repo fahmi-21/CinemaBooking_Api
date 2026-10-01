@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Application.Features.Branches.Queries.GetBranshById
 {
-    public sealed class GetBranchByIdQueryHandler : IRequestHandler<GetBranchByIdQuery, GetBranchByIdResponse?>
+    public sealed class GetBranchByIdQueryHandler : IRequestHandler<GetBranchByIdQuery, ApiResponse<GetBranchByIdResponse>>
     {
         private readonly IAppDbContext _context;
         
@@ -15,7 +15,7 @@ namespace Application.Features.Branches.Queries.GetBranshById
             _context = context;
         }
 
-        public async Task<GetBranchByIdResponse> Handle ( GetBranchByIdQuery request , CancellationToken  cancellationToken)
+        public async Task<ApiResponse<GetBranchByIdResponse>> Handle ( GetBranchByIdQuery request , CancellationToken  cancellationToken)
         {
             var branch = await _context.Branches.AsNoTracking()
                 .Where(e => e.Id == request.Id)
@@ -28,7 +28,9 @@ namespace Application.Features.Branches.Queries.GetBranshById
                 x.GoogleMapsUrl
             )).FirstOrDefaultAsync(cancellationToken);
 
-            return branch; 
+            return branch is null
+                ? new ApiResponse<GetBranchByIdResponse>(false, "Branch not found.", null)
+                : new ApiResponse<GetBranchByIdResponse>(true, "Branch retrieved successfully.", branch);
         }
     }
 }

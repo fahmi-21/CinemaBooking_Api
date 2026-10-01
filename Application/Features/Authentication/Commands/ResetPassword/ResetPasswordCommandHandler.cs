@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Identity;
+﻿using Application.Common.Models;
+using Domain.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 namespace Application.Features.Authentication.Commands.ResetPassword
 {
-    public class ResetPasswordCommandHandler : IRequestHandler< ResetPasswordCommand , ResetPasswordResponse >
+    public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand, ApiResponse<EmptyResponse>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         public ResetPasswordCommandHandler(UserManager<ApplicationUser> userManager)
@@ -15,13 +16,13 @@ namespace Application.Features.Authentication.Commands.ResetPassword
             _userManager = userManager;
         }
 
-        public async Task<ResetPasswordResponse> Handle ( ResetPasswordCommand request , CancellationToken cancellationToken)
+        public async Task<ApiResponse<EmptyResponse>> Handle ( ResetPasswordCommand request , CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByIdAsync(request.UserId.ToString());
 
             if (user is null)
             {
-                return new ResetPasswordResponse( false , "User not found.");
+                return new ApiResponse<EmptyResponse>(false, "User not found.", null);
             }
 
             string decodedToken;
@@ -32,7 +33,7 @@ namespace Application.Features.Authentication.Commands.ResetPassword
             }
             catch
             {
-                return new ResetPasswordResponse(false,"Invalid reset token.");
+                return new ApiResponse<EmptyResponse>(false, "Invalid reset token.", null);
             }
 
             var result = await _userManager.ResetPasswordAsync(user,  decodedToken , request.NewPassword);
@@ -41,10 +42,10 @@ namespace Application.Features.Authentication.Commands.ResetPassword
             {
                 var errors = string.Join(", ",result.Errors.Select(e => e.Description));
 
-                return new ResetPasswordResponse(false , $"Password reset failed: {errors}");
+                return new ApiResponse<EmptyResponse>(false, $"Password reset failed: {errors}", null);
             }
 
-            return new ResetPasswordResponse( true , "Password has been reset successfully.");
+            return new ApiResponse<EmptyResponse>(true, "Password has been reset successfully.", new EmptyResponse());
 
         }
     }

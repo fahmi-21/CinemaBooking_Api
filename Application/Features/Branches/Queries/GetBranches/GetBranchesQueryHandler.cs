@@ -1,4 +1,5 @@
-﻿using Application.Abstractions;
+using Application.Abstractions;
+using Application.Common.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Application.Features.Branches.Queries.GetBranches
 {
-    public sealed class GetBranchesQueryHandler : IRequestHandler< GetBranchesQuery , GetBranchesResponse>
+    public sealed class GetBranchesQueryHandler : IRequestHandler<GetBranchesQuery, ApiResponse<GetBranchesResponse>>
     {
         private readonly IAppDbContext _context;
         public GetBranchesQueryHandler ( IAppDbContext context )
@@ -14,7 +15,7 @@ namespace Application.Features.Branches.Queries.GetBranches
             _context = context;
         }
 
-        public async Task <GetBranchesResponse> Handle ( GetBranchesQuery request , CancellationToken cancellationToken )
+        public async Task<ApiResponse<GetBranchesResponse>> Handle ( GetBranchesQuery request , CancellationToken cancellationToken )
         {
             var query = _context.Branches.AsNoTracking();
 
@@ -36,13 +37,15 @@ namespace Application.Features.Branches.Queries.GetBranches
                                ))
                 .ToListAsync(cancellationToken);
 
-            return new GetBranchesResponse(
-                            branches,
-                            totalCount,
-                            request.PageNumber,
-                            request.PageSize,
-                            totalPages);
-
+            return new ApiResponse<GetBranchesResponse>(
+                true,
+                "Branches retrieved successfully.",
+                new GetBranchesResponse(
+                    branches,
+                    totalCount,
+                    request.PageNumber,
+                    request.PageSize,
+                    totalPages));
         }
     }
 }

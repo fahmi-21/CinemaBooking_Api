@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Common.Models;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,5 +12,5 @@ namespace Application.Features.Branches.Commands.Create
     double? Latitude,
     double? Longitude,
     string GoogleMapsUrl
-    ) : IRequest<int>;
+    ) : IRequest<ApiResponse<CreateBranchResponse>>;
 }

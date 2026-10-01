@@ -1,0 +1,11 @@
+﻿using Application.Common.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Application.Features.Branches.Commands.Delete
+{
+    public sealed record DeleteBranchCommand(
+        int Id
+        ) : IRequest<ApiResponse<EmptyResponse?>>;
+}

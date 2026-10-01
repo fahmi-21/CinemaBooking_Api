@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Common.Models;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,5 +10,5 @@ namespace Application.Features.Authentication.Commands.ResetPassword
     Guid UserId,
     string Token,
     string NewPassword
-    ) : IRequest<ResetPasswordResponse>;
+    ) : IRequest<ApiResponse<EmptyResponse>>;
 }

@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Text;
 using Application.Common.Constants;
 using Domain.Entities.Identity;
+using Application.Common.Models;
 
 namespace Application.Features.Authentication.Queries.ConfirmEmail
 {
-    public  sealed class ConfirmEmailCommandHandler :IRequestHandler<ConfirmEmailCommand, ConfirmEmailResponse>
+    public sealed class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, ApiResponse<EmptyResponse>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         public ConfirmEmailCommandHandler(
@@ -17,15 +18,15 @@ namespace Application.Features.Authentication.Queries.ConfirmEmail
         {
             _userManager = userManager;
         }
-        public async Task<ConfirmEmailResponse> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<EmptyResponse>> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByIdAsync(request.UserId.ToString());
 
             if (user == null)
-                return new ConfirmEmailResponse(false, "User not found.");
+                return new ApiResponse<EmptyResponse>(false, "User not found.", null);
 
             if (user.EmailConfirmed)
-                return new ConfirmEmailResponse(false, "Email is already confirmed.");
+                return new ApiResponse<EmptyResponse>(false, "Email is already confirmed.", null);
 
             var result = await _userManager.ConfirmEmailAsync(user, request.Token);
 
@@ -33,10 +34,10 @@ namespace Application.Features.Authentication.Queries.ConfirmEmail
             {
                 var errors = string.Join(", ", result.Errors.Select(e => e.Description));
 
-                return new ConfirmEmailResponse(false, $"Email confirmation failed: {errors}");
+                return new ApiResponse<EmptyResponse>(false, $"Email confirmation failed: {errors}", null);
             }
 
-            return new ConfirmEmailResponse(true, "Email confirmed successfully.");
+            return new ApiResponse<EmptyResponse>(true, "Email confirmed successfully.", new EmptyResponse());
         }
     }
        

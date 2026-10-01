@@ -1,4 +1,6 @@
 ﻿using Application.Abstractions;
+using Application.Common.Models;
+using Application.DTOs.Auth.Responses;
 using Domain.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +10,7 @@ using System.Text;
 
 namespace Application.Features.Authentication.Commands.Login
 {
-    public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
+    public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, ApiResponse<LoginResponse>>
     {
         private readonly ITokenService _tokenService;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -20,7 +22,7 @@ namespace Application.Features.Authentication.Commands.Login
             _userManager = userManager;
         }
 
-        public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<LoginResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
 
@@ -34,11 +36,15 @@ namespace Application.Features.Authentication.Commands.Login
             }
             var accessToken = await _tokenService.GenerateAccessTokenAsync(user);
             var refreshToken = _tokenService.GenerateRefreshToken();
-            return new LoginResponse(
-                user.Id,
-                user.Email!,
-                accessToken,
-                refreshToken
+            return new ApiResponse<LoginResponse>(
+                true,
+                "Login successful.",
+                new LoginResponse(
+                    user.Id,
+                    user.Email!,
+                    accessToken,
+                    refreshToken
+                )
             );
         }
 

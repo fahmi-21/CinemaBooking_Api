@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Application.Abstractions;
+using Application.Common.Models;
+using Application.DTOs.Auth.Responses;
 
 namespace Application.Features.Authentication.Commands.Register;
 
-public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterResponse>
+public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand, ApiResponse<RegisterResponse>>
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IConfiguration _configuration;
@@ -27,7 +29,7 @@ public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand, Re
         _logger = logger;
     }
 
-    public async Task<RegisterResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<RegisterResponse>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
         var user = new ApplicationUser
         {
@@ -40,7 +42,7 @@ public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand, Re
         if (!result.Succeeded)
         {
             var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-            return new RegisterResponse(Guid.Empty, null, $"Registration failed: {errors}");
+            return new ApiResponse<RegisterResponse>(false, $"Registration failed: {errors}", null);
         }
 
         await _userManager.AddToRoleAsync(user, Roles.CUSTOMER_ROLE);
@@ -57,6 +59,9 @@ public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand, Re
 
         await _emailService.SendEmailAsync(user.Email, "Confirm your email", $"<h1>Click <a href='{confirmationLink}'>here</a> to confirm your account</h1>", cancellationToken);
 
-        return new RegisterResponse(user.Id, user.Email, "Registration successful.");
+        return new ApiResponse<RegisterResponse>(
+            true,
+            "Registration successful.",
+            new RegisterResponse(user.Id, user.Email));
     }
 }

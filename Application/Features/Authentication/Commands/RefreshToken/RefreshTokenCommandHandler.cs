@@ -1,11 +1,13 @@
 ﻿using Application.Abstractions;
+using Application.Common.Models;
+using Application.DTOs.Auth.Responses;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Application.Features.Authentication.Commands.RefreshToken;
 
-public sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, RefreshTokenResponse>
+public sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, ApiResponse<RefreshTokenResponse>>
 {
     private readonly IAppDbContext _context;
     private readonly ITokenService _tokenService;
@@ -21,7 +23,7 @@ public sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCom
         _configuration = configuration;
     }
 
-    public async Task<RefreshTokenResponse> Handle( RefreshTokenCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<RefreshTokenResponse>> Handle( RefreshTokenCommand request, CancellationToken cancellationToken)
     {
         // 1. Find refresh token
         var refreshToken = await _context.RefreshTokens
@@ -77,8 +79,11 @@ public sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCom
         await _context.SaveChangesAsync(cancellationToken);
 
         // 12. Return new tokens
-        return new RefreshTokenResponse(
-            newAccessToken,
-            newRefreshTokenValue);
+        return new ApiResponse<RefreshTokenResponse>(
+            true,
+            "Tokens refreshed successfully.",
+            new RefreshTokenResponse(
+                newAccessToken,
+                newRefreshTokenValue));
     }
 }

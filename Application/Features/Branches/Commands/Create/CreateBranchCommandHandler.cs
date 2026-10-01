@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions;
+using Application.Common.Models;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Application.Features.Branches.Commands.Create
 {
-    public sealed class CreateBranchCommandHandler : IRequestHandler<CreateBranchCommand , int>
+    public sealed class CreateBranchCommandHandler : IRequestHandler<CreateBranchCommand, ApiResponse<CreateBranchResponse>>
     {
         private readonly IAppDbContext _context;
         public CreateBranchCommandHandler ( IAppDbContext context )
@@ -14,7 +15,7 @@ namespace Application.Features.Branches.Commands.Create
             _context = context;
         }
 
-        public async Task<int> Handle ( CreateBranchCommand request ,CancellationToken cancellationToken )
+        public async Task<ApiResponse<CreateBranchResponse>> Handle ( CreateBranchCommand request ,CancellationToken cancellationToken )
         {
             var branch = new Branch
             {
@@ -29,7 +30,10 @@ namespace Application.Features.Branches.Commands.Create
             _context.Branches.Add(branch);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return branch.Id;
+            return new ApiResponse<CreateBranchResponse>(
+                             true,
+                             "Branch created successfully.",
+                             new CreateBranchResponse(branch.Id));
         }
     }
 }

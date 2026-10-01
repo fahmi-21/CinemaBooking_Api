@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Application.Common.Models;
+using Application.DTOs.Auth.Responses;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,5 +13,5 @@ namespace Application.Features.Authentication.Commands.Register
     string Email,
     string Password,
     string ConfirmPassword
-    ) : IRequest<RegisterResponse>;
+    ) : IRequest<ApiResponse<RegisterResponse>>;
 }

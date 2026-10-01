@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Application.Common.Models;
 using MediatR;
 namespace Application.Features.Authentication.Commands.ChangePassword
 {
@@ -8,5 +9,5 @@ namespace Application.Features.Authentication.Commands.ChangePassword
         string CurrentPassword,
         string NewPassword,
         string ConfirmNewPassword
-        ) : IRequest<ChangePasswordResponse>;
+        ) : IRequest<ApiResponse<EmptyResponse>>;
 }
