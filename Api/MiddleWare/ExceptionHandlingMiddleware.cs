@@ -30,5 +30,12 @@ public class ExceptionHandlingMiddleware
             await context.Response.WriteAsJsonAsync(
                 new ApiResponse<EmptyResponse>(false, message, null));
         }
+        catch (UnauthorizedAccessException ex)
+        {
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsJsonAsync(
+                new ApiResponse<EmptyResponse>(false, ex.Message, null));
+        }
     }
 }

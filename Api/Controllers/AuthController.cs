@@ -53,6 +53,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("Logout")]
+        [Authorize]
         public async Task<IActionResult> Logout(LogoutCommand command)
         {
             var result = await _sender.Send(command);

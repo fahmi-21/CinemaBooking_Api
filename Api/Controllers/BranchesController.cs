@@ -15,7 +15,7 @@ namespace Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE},{Roles.BRANCH_MANAGER_ROLE}")]
+[Authorize(Roles = $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE},{Roles.CUSTOMER_ROLE}")]
 
 public class BranchesController : ControllerBase
 {
@@ -27,6 +27,7 @@ public class BranchesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE}")]
     public async Task<IActionResult> Create(CreateBranchCommand command)
     {
         var result = await _sender.Send(command);
@@ -34,6 +35,7 @@ public class BranchesController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         var result = await _sender.Send(new DeleteBranchCommand(id));
@@ -45,6 +47,7 @@ public class BranchesController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBranchRequest request)
     {
         var command = new UpdateBranchCommand(

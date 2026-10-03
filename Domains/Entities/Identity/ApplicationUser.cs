@@ -8,6 +8,8 @@ public class ApplicationUser : IdentityUser<Guid>
     public string LName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public bool IsActive { get; set; }
+    public int? BranchId { get; set; }
+    public Branch? Branch { get; set; }
     public ICollection<Booking> Bookings { get; set; } = [];
     public ICollection<Review> Reviews { get; set; } = [];
     public ICollection<Favorite> Favorites { get; set; } = [];

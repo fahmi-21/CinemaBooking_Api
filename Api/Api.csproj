@@ -5,7 +5,15 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <NuGetAudit>false</NuGetAudit>
+    <UserSecretsId>0245fa7b-8460-44b5-a94d-00951d8963a0</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\NewFolder\**" />
+    <Content Remove="Controllers\NewFolder\**" />
+    <EmbeddedResource Remove="Controllers\NewFolder\**" />
+    <None Remove="Controllers\NewFolder\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
@@ -25,7 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\NewFolder\" />
     <Folder Include="MiddleWare\" />
     <Folder Include="Extentions\" />
   </ItemGroup>

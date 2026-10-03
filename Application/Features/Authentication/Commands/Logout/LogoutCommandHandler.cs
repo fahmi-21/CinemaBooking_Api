@@ -10,10 +10,12 @@ namespace Application.Features.Authentication.Commands.Logout
     {
         private readonly ITokenService _tokenService;
         private readonly IAppDbContext _context;
-        public LogoutCommandHandler ( ITokenService tokenService , IAppDbContext context)
+        private readonly ICurrentUserService _currentUserService;
+        public LogoutCommandHandler ( ITokenService tokenService , IAppDbContext context, ICurrentUserService currentUserService)
         {
             _tokenService = tokenService;
             _context = context;
+            _currentUserService = currentUserService;
         }
 
         public async Task<ApiResponse<EmptyResponse>> Handle ( LogoutCommand request , CancellationToken cancellationToken)
@@ -21,7 +23,7 @@ namespace Application.Features.Authentication.Commands.Logout
             // get refresh token from database
             var refreshToken = await _context.RefreshTokens
             .FirstOrDefaultAsync(
-                x => x.Token == request.RefreshToken,
+                x => x.Token == request.RefreshToken && x.UserId == _currentUserService.UserId,
                 cancellationToken);
 
 

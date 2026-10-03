@@ -1,6 +1,5 @@
 using Application.Abstractions;
 using Application.Common.Models;
-using Application.Features.Actors.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Actors.Commands.Update;

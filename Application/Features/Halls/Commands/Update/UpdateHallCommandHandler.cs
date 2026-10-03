@@ -25,9 +25,16 @@ namespace Application.Features.Halls.Commands.Update
                     " hall not found"
                     , null);
 
+            var branchExists = await _context.Branches.AnyAsync(e => e.Id == request.BranchId, cancellationToken);
+            if (!branchExists)
+                return new ApiResponse<UpdateHallResponse>(false, "Branch not found.", null);
+
             hall.Name = request.Name;
+            hall.BranchId = request.BranchId;
+            hall.Type = request.Type;
             hall.Capacity = request.Capacity;
             hall.CleaningBufferMinutes = request.CleaningBufferMinutes;
+            hall.SetUpdatedAt();
 
             await _context.SaveChangesAsync(cancellationToken);
 

@@ -13,8 +13,7 @@ namespace Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(Roles = $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE},{Roles.BRANCH_MANAGER_ROLE}")]
-
+[Authorize]
 public sealed class ActorsController : ControllerBase
 {
     private readonly ISender _sender;
@@ -22,14 +21,17 @@ public sealed class ActorsController : ControllerBase
     public ActorsController(ISender sender) => _sender = sender;
 
     [HttpPost]
+    [Authorize(Roles = $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE}")]
     public async Task<IActionResult> Create([FromBody] CreateActorCommand command)
         => Ok(await _sender.Send(command));
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll()
         => Ok(await _sender.Send(new GetActorsQuery()));
 
     [HttpGet("{id:int}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
         var result = await _sender.Send(new GetActorByIdQuery(id));
@@ -37,6 +39,7 @@ public sealed class ActorsController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateActorRequest request)
     {
         var command = new UpdateActorCommand(
@@ -48,6 +51,7 @@ public sealed class ActorsController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         var result = await _sender.Send(new DeleteActorCommand(id));

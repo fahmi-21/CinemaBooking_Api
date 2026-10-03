@@ -31,5 +31,8 @@ namespace Infrastructure.Services
                 return id;
             }
         }
+
+        public bool IsInRole(string role) =>
+            _httpContextAccessor.HttpContext?.User.IsInRole(role) == true;
     }
 }
