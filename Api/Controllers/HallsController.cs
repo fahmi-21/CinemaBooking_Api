@@ -12,8 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers;
 
 [Route("api/[controller]")]
-[ApiController ]
-[Authorize(Roles = $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE}")]
+[ApiController]
 public class HallsController : ControllerBase
 {
     private readonly ISender _sender;
@@ -24,6 +23,8 @@ public class HallsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles =
+    $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE},{Roles.BRANCH_MANAGER_ROLE}")]
     public async Task<IActionResult> Create([FromBody] CreateHallCommand command)
     {
         var result = await _sender.Send(command);
@@ -31,6 +32,8 @@ public class HallsController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles =
+    $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE},{Roles.BRANCH_MANAGER_ROLE}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateHallRequest request)
     {
         var command = new UpdateHallCommand(
@@ -49,6 +52,8 @@ public class HallsController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles =
+    $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE},{Roles.BRANCH_MANAGER_ROLE}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         var result = await _sender.Send(new DeleteHallCommand(id));
@@ -59,12 +64,16 @@ public class HallsController : ControllerBase
         return Ok(result);
     }
     [HttpGet("{id:int}")]
+    [Authorize(Roles =
+    $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE},{Roles.BRANCH_MANAGER_ROLE},{Roles.CUSTOMER_ROLE}")]
     public async Task<IActionResult> Get([FromRoute] int id)
     {
         var result = await _sender.Send(new GetHallByIdQuery(id));
         return Ok(result);
     }
     [HttpGet]
+    [Authorize(Roles =
+    $"{Roles.ADMIN_ROLE},{Roles.SUPER_ADMIN_ROLE},{Roles.BRANCH_MANAGER_ROLE},{Roles.CUSTOMER_ROLE}")]
     public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         var result = await _sender.Send(new GetHallsQuery(pageNumber, pageSize));

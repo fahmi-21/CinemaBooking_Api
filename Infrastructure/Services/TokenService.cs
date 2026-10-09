@@ -33,6 +33,10 @@ namespace Infrastructure.Services
                 new Claim(ClaimTypes.Name, user.UserName!),
             };
 
+            if (user.BranchId is int branchId)
+            {
+                userClaims.Add(new Claim("branch_id", branchId.ToString()));
+            }
             // Add role claims to the user claims
             userClaims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 

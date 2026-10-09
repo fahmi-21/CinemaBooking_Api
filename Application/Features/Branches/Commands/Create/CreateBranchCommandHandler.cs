@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions;
 using Application.Common.Models;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,11 @@ namespace Application.Features.Branches.Commands.Create
 
         public async Task<ApiResponse<CreateBranchResponse>> Handle ( CreateBranchCommand request ,CancellationToken cancellationToken )
         {
+            var branchExists = await _context.Branches.AnyAsync(e => e.Name == request.Name, cancellationToken);
+
+            if (branchExists)
+                return new ApiResponse<CreateBranchResponse>(false, "Branch is already Found", null);
+
             var branch = new Branch
             {
                 Name = request.Name,

@@ -31,7 +31,20 @@ namespace Infrastructure.Services
                 return id;
             }
         }
+        public int? BranchId
+        {
+            get
+            {
+                var value = _httpContextAccessor.HttpContext?
+                    .User
+                    .FindFirst("branch_id")?
+                    .Value;
 
+                return int.TryParse(value, out var branchId)
+                    ? branchId
+                    : null;
+            }
+        }
         public bool IsInRole(string role) =>
             _httpContextAccessor.HttpContext?.User.IsInRole(role) == true;
     }
